@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link2Owner | AI-Powered Real Estate Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #0f172a;
+            --accent: #f97316;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --success: #10b981;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .cta-button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: white;
+            padding: 160px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: 100% 100%;
+            opacity: 0.2;
+        }
+
+        .hero-content {
+            max-width: 700px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .secondary-button {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .secondary-button:hover {
+            background-color: white;
+            color: var(--primary);
+        }
+
+        /* Stats Section */
+        .stats {
+            background-color: white;
+            padding: 40px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--dark);
+            opacity: 0.8;
+        }
+
+        /* Roadmap Section */
+        .roadmap {
+            padding: 80px 0;
+            background-color: #f1f5f9;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            color: var(--secondary);
+        }
+
+        .roadmap-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .quarter-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .quarter-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .quarter-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quarter-title i {
+            background-color: #dbeafe;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+
+        .quarter-goals {
+            list-style-type: none;
+        }
+
+        .quarter-goals li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .quarter-goals li:last-child {
+            border-bottom: none;
+        }
+
+        .quarter-goals li i {
+            color: var(--success);
+            margin-top: 5px;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .testimonial-carousel {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .testimonial {
+            background-color: #f8fafc;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .testimonial-content {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .testimonial-content::before,
+        .testimonial-content::after {
+            content: '"';
+            font-size: 4rem;
+            color: #cbd5e1;
+            position: absolute;
+            opacity: 0.2;
+        }
+
+        .testimonial-content::before {
+            top: -30px;
+            left: -20px;
+        }
+
+        .testimonial-content::after {
+            bottom: -50px;
+            right: -20px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .author-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .author-title {
+            color: #64748b;
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #cbd5e1;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background-color: var(--primary);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background-color: #f1f5f9;
+        }
+
+        .features-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .feature-panel {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .panel-header {
+            background: linear-gradient(135deg, var(--primary) 0%, #1e3a8a 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .panel-content {
+            padding: 30px;
+        }
+
+        .feature-list {
+            list-style-type: none;
+        }
+
+        .feature-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            gap: 15px;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list li i {
+            color: var(--success);
+            font-size: 1.2rem;
+            margin-top: 3px;
+        }
+
+        .agent-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .agent-image::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.1) 0%, transparent 40%);
+        }
+
+        .phone-mockup {
+            width: 250px;
+            height: 500px;
+            background: #0f172a;
+            border-radius: 40px;
+            position: relative;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .phone-screen {
+            background: linear-gradient(135deg, #1e40af 0%, #0f172a 100%);
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: white;
+        }
+
+        .call-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .faq-question {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            background-color: #f8fafc;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 20px;
+            max-height: 500px;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: white;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .contact-info h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .contact-info p {
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .contact-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .contact-feature {
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .contact-feature i {
+            background-color: rgba(255,255,255,0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .contact-form {
+            background-color: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-button:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .copyright {
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .roadmap-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .features-container,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-features {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .stats-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .roadmap-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Link2Owner<span>VoiceAI</span></div>
+                <div class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#roadmap">Roadmap</a>
+                    <a href="#testimonials">Testimonials</a>
+                    <a href="#faq">FAQ</a>
+                </div>
+                <a href="#contact"> <button class="cta-button">Get Started</button> </a>
+
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>AI-Powered Real Estate Assistant That Closes Deals 24/7</h1>
+                <p>Meet your tireless sales agent that handles customer onboarding, schedules property visits, negotiates deals, and converts leads into closed sales - all with a human-like conversational voice.</p>
+                <div class="hero-buttons">
+                     <a href="#contact"> <button class="cta-button">Schedule a Demo</button></a>
+                     <a href="#contact"> <button class="secondary-button">How It Works</button></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-number">16</div>
+                    <div class="stat-label">Monthly Visitors</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">13</div>
+                    <div class="stat-label">Signed Up</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section class="roadmap" id="roadmap">
+        <div class="container">
+            <h2 class="section-title">Product Roadmap</h2>
+            <div class="roadmap-grid">
+                <div class="quarter-card">
+                    <div class="quarter-title">
+                        <i class="fas fa-rocket"></i>
+                        <span>Q1 2025</span>
+                    </div>
+                    <ul class="quarter-goals">
+                        <li><i class="fas fa-check-circle"></i> Voice agent MVP launch</li>
+                        <li><i class="fas fa-check-circle"></i> Basic property onboarding</li>
+                        <li><i class="fas fa-check-circle"></i> Appointment scheduling</li>
+                        <li><i class="fas fa-check-circle"></i> Tamil language support</li>
+                    </ul>
+                </div>
+                <div class="quarter-card">
+                    <div class="quarter-title">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Q2 2025</span>
+                    </div>
+                    <ul class="quarter-goals">
+                        <li><i class="fas fa-spinner"></i> Negotiation module</li>
+                        <li><i class="fas fa-spinner"></i> Loan plan integration</li>
+                        <li><i class="fas fa-spinner"></i> Legal audit services</li>
+                        <li><i class="fas fa-spinner"></i> Interior service pitching</li>
+                    </ul>
+                </div>
+                <div class="quarter-card">
+                    <div class="quarter-title">
+                        <i class="fas fa-cogs"></i>
+                        <span>Q3 2025</span>
+                    </div>
+                    <ul class="quarter-goals">
+                        <li><i class="fas fa-circle"></i> WhatsApp integration</li>
+                        <li><i class="fas fa-circle"></i> NoBroker competitor analysis</li>
+                        <li><i class="fas fa-circle"></i> Multi-language expansion</li>
+                        <li><i class="fas fa-circle"></i> Advanced lead scoring</li>
+                    </ul>
+                </div>
+                <div class="quarter-card">
+                    <div class="quarter-title">
+                        <i class="fas fa-robot"></i>
+                        <span>Q4 2025</span>
+                    </div>
+                    <ul class="quarter-goals">
+                        <li><i class="fas fa-circle"></i> Predictive pricing models</li>
+                        <li><i class="fas fa-circle"></i> Virtual property tours</li>
+                        <li><i class="fas fa-circle"></i> AI negotiation coach</li>
+                        <li><i class="fas fa-circle"></i> Market trend analysis</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Clients Say</h2>
+            <div class="testimonial-carousel">
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        This AI agent has transformed our sales process. It handles initial inquiries, schedules visits, and even follows up with leads - all while sounding completely human. Our conversion rates have increased by 40% since implementation.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">RK</div>
+                        <div>
+                            <div class="author-name">Rajesh Kumar</div>
+                            <div class="author-title">CEO, Prime Properties Chennai</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-dots">
+                    <div class="dot active"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Powerful Orchestration & Calling Features</h2>
+            <div class="features-container">
+                <div class="feature-panel">
+                    <div class="panel-header">
+                        <h3>Agent Orchestration Dashboard</h3>
+                    </div>
+                    <div class="panel-content">
+                        <ul class="feature-list">
+                            <li>
+                                <i class="fas fa-sliders-h"></i>
+                                <div>
+                                    <strong>Real-time Conversation Monitoring</strong>
+                                    <p>Listen to live calls and monitor agent performance</p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fas fa-brain"></i>
+                                <div>
+                                    <strong>AI Behavior Customization</strong>
+                                    <p>Adjust tone, pacing, and sales approach</p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fas fa-chart-pie"></i>
+                                <div>
+                                    <strong>Performance Analytics</strong>
+                                    <p>Track conversion rates, call duration, and deal values</p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fas fa-sync-alt"></i>
+                                <div>
+                                    <strong>Seamless Human Handoff</strong>
+                                    <p>Transfer complex negotiations to human agents</p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fas fa-plug"></i>
+                                <div>
+                                    <strong>CRM Integration</strong>
+                                    <p>Sync with Salesforce, HubSpot, and custom systems</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="agent-image">
+                        <div class="phone-mockup">
+                            <div class="phone-screen">
+                                <div class="call-icon">
+                                    <i class="fas fa-phone-alt fa-2x"></i>
+                                </div>
+                                <h3>AI Agent Calling</h3>
+                                <p>Live conversation with prospects</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feature-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>Human-like Voice Conversations</strong>
+                                <p>Natural pauses, emotional tone, and perfect diction</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>Context-Aware Dialogue</strong>
+                                <p>Remembers previous conversations and preferences</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>Multi-lingual Support</strong>
+                                <p>English, Tamil, Hindi, and 8+ Indian languages</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>Service Upselling</strong>
+                                <p>Seamlessly pitch loan, legal, and interior services</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>24/7 Availability</strong>
+                                <p>Never miss a lead, even at midnight</p>
+                            </div>
+                        </li>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-container">
+                <div class="faq-item active">
+                    <div class="faq-question">
+                        How human-like does the AI sound?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Our AI uses advanced voice synthesis with natural pauses, emotional inflection, and perfect diction. In blind tests, 92% of listeners couldn't distinguish it from a human agent. The AI adapts its tone to be friendly, professional, or urgent based on conversation context.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can it handle complex negotiations?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Absolutely. Our AI is trained on thousands of real estate negotiations and can handle price discussions, terms adjustments, and closing strategies. For extremely complex cases, it can seamlessly transfer the conversation to a human agent while providing full context.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How does the AI upsell additional services?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        The AI identifies opportunities during conversations to naturally introduce our partner services. For example, when a client mentions budget concerns, it might suggest our loan partnerships. When discussing property condition, it introduces interior services. All recommendations are contextually relevant and delivered conversationally.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What's the setup process?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Implementation takes 3 simple steps: 1) We integrate with your existing CRM or lead sources, 2) Customize the AI's knowledge base with your properties and services, 3) Train your team on the orchestration dashboard. Most clients are fully operational within 48 hours.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h2>Get a Personal Demo From Our AI Agent</h2>
+                    <p>Experience our AI real estate assistant firsthand. Provide your number and our AI will call you immediately to demonstrate its capabilities.</p>
+
+                    <div class="contact-features">
+                        <div class="contact-feature">
+                            <i class="fas fa-phone-alt"></i>
+                            <div>
+                                <strong>Instant Connection</strong>
+                                <p>Our AI calls within 60 seconds</p>
+                            </div>
+                        </div>
+                        <div class="contact-feature">
+                            <i class="fas fa-user-tie"></i>
+                            <div>
+                                <strong>Personalized Demo</strong>
+                                <p>Tailored to your business needs</p>
+                            </div>
+                        </div>
+                        <div class="contact-feature">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <strong>24/7 Availability</strong>
+                                <p>Day or night, we're ready to connect</p>
+                            </div>
+                        </div>
+                        <div class="contact-feature">
+                            <i class="fas fa-rupee-sign"></i>
+                            <div>
+                                <strong>No Obligation</strong>
+                                <p>Zero commitment, just value</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" placeholder="Enter your name">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" placeholder="Enter your phone number">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Special Requests (Optional)</label>
+                        <textarea id="message" placeholder="Any specific aspects you'd like the demo to cover?"></textarea>
+                    </div>
+                    <button class="submit-button">Request AI Callback</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">Link2Owner<span>VoiceAI</span></div>
+                <div class="copyright">© 2025 Link2Owner. All rights reserved.</div>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('active');
+            });
+        });
+
+        // Testimonial Carousel
+        let currentTestimonial = 0;
+        const dots = document.querySelectorAll('.dot');
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                dots.forEach(d => d.classList.remove('active'));
+                dot.classList.add('active');
+                currentTestimonial = index;
+            });
+        });
+
+        // Auto rotate testimonials
+        setInterval(() => {
+            currentTestimonial = (currentTestimonial + 1) % dots.length;
+            dots.forEach(d => d.classList.remove('active'));
+            dots[currentTestimonial].classList.add('active');
+        }, 5000);
+
+        // Form submission
+        const contactForm = document.querySelector('.contact-form');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you! Our AI agent will call you within 60 seconds.');
+            contactForm.reset();
+        });
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
